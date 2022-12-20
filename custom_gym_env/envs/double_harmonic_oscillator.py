@@ -13,7 +13,7 @@ class DoubleHarmonicOscillator():
         self.b = 3
         self.h = 5
         self.gamma = 0.1
-        self.N = 5     # matrix size
+        self.N = 60     # matrix size
 
     """
     squueze operator's delta
@@ -119,6 +119,19 @@ class DoubleHarmonicOscillator():
     """
     def measurement_operator_matrix(self):
         return np.sqrt(self.gamma) * self.x2_operator_matrix()
+
+    """
+    initial state
+    """
+    def init_state(self):
+        rho = thermal_dm(self.N, 1)
+        rho = np.array(rho)
+        for i in range(self.N):
+            if i % 2 != 0:
+                rho[i, i] = 0
+        rho = Qobj(rho).unit()
+
+        return rho
 
 
     """
