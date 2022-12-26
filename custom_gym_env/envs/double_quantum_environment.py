@@ -55,7 +55,7 @@ class DoubleHarmonicOscillatorEnv(gym.Env):
         self.F = self.oscillator.squeezed_Hamiltonian()
 
         # action
-        a0 = action[0]
+        a0 = action[0] * 5
 
         def squeeze_coeff(t, args):
             return args["w1"]
