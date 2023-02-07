@@ -42,8 +42,8 @@ class DoubleHarmonicOscillatorEnv(gym.Env):
 
     def step(self, action):
         # constant
-        self.nsteps = 0.0025
-        self.times = np.arange(0, 0.01, self.nsteps)
+        self.elements = 4
+        self.times = np.linspace(0, 0.01, self.elements)
         self.ntraj = 8
         self.nsubsteps = 30
 
@@ -68,6 +68,11 @@ class DoubleHarmonicOscillatorEnv(gym.Env):
             store_measurement=True, dW_factors=[1/np.sqrt(0.4)]
         )
         self.rho0 = stoc_solution.states[-1]
+        self.rho0 = np.array(self.rho0)
+        for i in range(60):
+            if i % 2 != 0:
+                self.rho[i, i] = 0
+        self.rho0 = Qobj(self.rho0).unit()
         
         with open('/media/user/3AB8C6C2B8C67C3F/Kasahara/result/episode{}/rho.csv'.format(self.episode_count), 'a') as f:
             writer_1 = csv.writer(f)
