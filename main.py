@@ -21,7 +21,6 @@ if __name__ == "__main__":
     env_id = "DoubleHarmonicOscillatorEnv-v0"
     num_cpu = 8
     env = SubprocVecEnv([make_env(env_id, i) for i in range(num_cpu)])
-    env = VecCheckNan(env, raise_exception=True)
     
     policy_kwargs = dict(net_arch=[dict(pi=[512, 256, 128], vf=[512, 256, 128])])
     model = PPO("MlpPolicy", env, policy_kwargs=policy_kwargs, verbose=1, learning_rate=1e-5, batch_size=100, n_steps=1000)
